@@ -10,7 +10,7 @@ Before starting, ensure the following:
 git clone https://github.com/XavierSPQR/BuddySystemDemonstration.git
     3. Navigate to the project directory:
 
-cd BuddySystemDemonstration
+            cd BuddySystemDemonstration
 3. Compile the Code
     1. Ensure you are in the directory containing the Java files (BuddySystem.java and BuddySystemDemo.java).
     2. Compile the Java files using the javac command:
