@@ -27,9 +27,9 @@ public class BuddySystemDemo {
                         int size = scanner.nextInt();
                         BuddySystem.MemoryBlock block = buddySystem.allocate(size);
                         if (block != null) {
-                            System.out.println("Allocated block ID: " + block.id +
-                                            " (size: " + block.size +
-                                            ", offset: " + block.offset + ")");
+                            System.out.println("Allocated block ID: " + block.getId() +
+                                            " (size: " + block.getSize() +
+                                            ", offset: " + block.getOffset() + ")");
                         } else {
                             System.out.println("Failed to allocate memory");
                         }

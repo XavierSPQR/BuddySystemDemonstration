@@ -25,14 +25,27 @@ public class BuddySystem {
 
     // Represents an allocated memory block
     public static class MemoryBlock {
-        int id;            // Unique identifier
-        int size;          // Size of allocation
-        int offset;        // Starting position in memory
+        private int id;            // Unique identifier
+        private int size;          // Size of allocation
+        private int offset;        // Starting position in memory
 
         MemoryBlock(int id, int size, int offset) {
             this.id = id;
             this.size = size;
             this.offset = offset;
+        }
+
+        // Add getters
+        public int getId() {
+            return id;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public int getOffset() {
+            return offset;
         }
     }
 
@@ -113,7 +126,7 @@ public class BuddySystem {
             return false;
         }
 
-        freeMemory(root, block.offset, block.size);
+        freeMemory(root, block.getOffset(), block.getSize());
         allocatedBlocks.remove(blockId);
         return true;
     }
@@ -164,12 +177,32 @@ public class BuddySystem {
 
         String indent = "  ".repeat(level);
         status.append(indent)
-              .append("Block[offset=").append(node.offset)
+              .append("Block[");
+        
+        if (node.allocated) {
+            Integer blockId = findBlockId(node.offset, node.size);
+            if (blockId != null) {
+                status.append("id=").append(blockId).append(", ");
+            }
+        }
+        
+        status.append("offset=").append(node.offset)
               .append(", size=").append(node.size)
               .append(", allocated=").append(node.allocated)
               .append("]\n");
 
         buildMemoryStatus(node.left, level + 1, status);
         buildMemoryStatus(node.right, level + 1, status);
+    }
+
+    // Add this new method to find block ID
+    private Integer findBlockId(int offset, int size) {
+        for (Map.Entry<Integer, MemoryBlock> entry : allocatedBlocks.entrySet()) {
+            MemoryBlock block = entry.getValue();
+            if (block.getOffset() == offset && block.getSize() == size) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 } 
